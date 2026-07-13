@@ -2,6 +2,11 @@
 // and throughput/latency predictions from FLOPs/bytes-per-token figures.
 package roofline
 
+import (
+	"roofline/internal/hardware"
+	"roofline/internal/model"
+)
+
 // BoundType classifies whether a workload is compute- or memory-bound
 // under the roofline model.
 type BoundType string
@@ -59,4 +64,15 @@ func Predict(flopsPerToken, bytesPerToken, peakFLOPS, peakBandwidth float64) Res
 		PredictedTokensPerSec: throughput,
 		PredictedLatencyMs:    1000 / throughput,
 	}
+}
+
+// Compute ties together a GPU spec and model config to produce a roofline
+// Result for the given precision, batch size, and sequence length.
+func Compute(gpu hardware.GPU, cfg model.Config, precision model.Precision, batch, seqLen int) (Result, error) {
+	flopsPerToken := cfg.FLOPsPerToken()
+	bytesPerToken, err := cfg.BytesPerToken(precision, batch, seqLen)
+	if err != nil {
+		return Result{}, err
+	}
+	return Predict(flopsPerToken, bytesPerToken, gpu.PeakFLOPS, gpu.PeakBandwidth), nil
 }
