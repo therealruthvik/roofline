@@ -10,10 +10,10 @@ import (
 // Config describes the architecture parameters needed for decode-step
 // FLOPs and KV-cache byte estimates.
 type Config struct {
-	Name       string
-	NumLayers  int
-	HiddenDim  int
-	NumParams  float64 // total parameter count
+	Name      string
+	NumLayers int
+	HiddenDim int
+	NumParams float64 // total parameter count
 }
 
 var configs = map[string]Config{

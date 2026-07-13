@@ -13,9 +13,9 @@ const (
 
 // Result holds the full roofline prediction for one configuration.
 type Result struct {
-	ArithmeticIntensity  float64 // FLOPs/byte
-	MachineBalance       float64 // FLOPs/byte
-	Bound                BoundType
+	ArithmeticIntensity   float64 // FLOPs/byte
+	MachineBalance        float64 // FLOPs/byte
+	Bound                 BoundType
 	PredictedTokensPerSec float64
 	PredictedLatencyMs    float64
 }
