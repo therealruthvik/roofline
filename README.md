@@ -97,6 +97,30 @@ Renders arithmetic intensity (log x) vs. achievable FLOPs/sec (log y),
 with the memory-bound diagonal, the compute-bound ceiling, and each swept
 batch size plotted as a point.
 
+## Getting real benchmark data
+
+`roofline validate` needs a JSON file of real measurements. If you don't
+have one, run vLLM's own throughput benchmark and convert its output:
+
+```
+python benchmarks/benchmark_throughput.py \
+  --model mistralai/Mistral-7B-v0.1 \
+  --input-len 128 --output-len 128 --num-prompts 8 \
+  > A10G_mistral-7b_batch8.log
+```
+
+Repeat per (gpu, model, batch_size), naming each log
+`<gpu>_<model>_batch<N>.log`, then convert them all in one shot:
+
+```
+python3 scripts/convert_vllm_results.py *.log -o benchmark.json
+```
+
+`scripts/convert_vllm_results.py` parses vLLM's `Throughput: ...
+requests/s, ... total tokens/s, ... output tokens/s` summary line and
+emits the JSON schema `validate` expects. A10G maps to AWS `g5.xlarge`,
+T4 maps to `g4dn.xlarge`, if you need to rent the hardware.
+
 ## Model vs Reality
 
 **Status: illustrative, not yet validated against real hardware.** The
