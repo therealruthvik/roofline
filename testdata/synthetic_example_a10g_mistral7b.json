@@ -1,0 +1,8 @@
+[
+  {"gpu": "A10G", "model": "mistral-7b", "batch_size": 1, "measured_tokens_per_sec": 34.2},
+  {"gpu": "A10G", "model": "mistral-7b", "batch_size": 4, "measured_tokens_per_sec": 118.6},
+  {"gpu": "A10G", "model": "mistral-7b", "batch_size": 8, "measured_tokens_per_sec": 201.3},
+  {"gpu": "A10G", "model": "mistral-7b", "batch_size": 16, "measured_tokens_per_sec": 312.7},
+  {"gpu": "A10G", "model": "mistral-7b", "batch_size": 32, "measured_tokens_per_sec": 421.5},
+  {"gpu": "A10G", "model": "mistral-7b", "batch_size": 64, "measured_tokens_per_sec": 468.9}
+]
